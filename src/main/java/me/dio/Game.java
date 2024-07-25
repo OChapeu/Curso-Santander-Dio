@@ -1,9 +1,11 @@
 package me.dio;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class Game {
@@ -15,6 +17,13 @@ public class Game {
     private String genre;
     private String platform;
     private int hoursPlayed;
+
+     @OneToOne(cascade = CascadeType.ALL)
+    private UserAccount userAccount;
+    
+    public UserAccount getUserAccount() {
+        return userAccount;
+    }
 
     // Getters and Setters
     public Long getId() {
@@ -55,31 +64,5 @@ public class Game {
 
     public void setHoursPlayed(int hoursPlayed) {
         this.hoursPlayed = hoursPlayed;
-    }
-
-    @Override
-    public String toString() {
-        return "Game{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", genre='" + genre + '\'' +
-                ", platform='" + platform + '\'' +
-                ", hoursPlayed=" + hoursPlayed +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Game game = (Game) o;
-
-        return id != null ? id.equals(game.id) : game.id == null;
-    }
-
-    @Override
-    public int hashCode() {
-        return id != null ? id.hashCode() : 0;
     }
 }
